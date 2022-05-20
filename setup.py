@@ -10,7 +10,7 @@ setup(
     author_email                  = 'jihogrammer@gmail.com',
     license                       = 'MIT',
     packages                      = find_packages(),
-    install_requires              = ['python-dotenv', 'requests'],
+    install_requires              = ['python-dotenv', 'requests', 'xmltodict'],
     classifiers                   = [
         "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: MIT License",
