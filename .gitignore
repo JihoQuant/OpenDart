@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+
+# OSX
+.DS_Store
+
+# Integrated Development Evironment
+.vscode/
+.editorconfig
+
+# Python Virtual Environment
+env/
+
+# Python Dot Environment
+.env*
+!.env.example
+
+# Output Resources
+*.json
+
+# Build Artifacts
+build/
+dist/
+*.egg-info/
