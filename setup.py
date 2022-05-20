@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name                          = 'OpenDart',
-    version                       = '0.0.1',
+    version                       = '0.0.2',
     description                   = '전자공시 OPEN DART 시스템 API',
     long_description              = open('README.md').read(),
     long_description_content_type = 'text/markdown',
