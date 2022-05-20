@@ -24,6 +24,8 @@ pip install opendart
 발급받은 `DART_API_KEY`를 입력해야 합니다.
 
 이미 사용중인 `.env` 파일이 있다면 추가해야 합니다.
+자세한 사용법은 [pypi.org](https://github.com/theskumar/python-dotenv) 혹은
+[github](https://github.com/theskumar/python-dotenv)을 참고바랍니다.
 
 ```env
 DART_API_KEY = '발급받은 API KEY'
@@ -34,20 +36,19 @@ DART_API_KEY = '발급받은 API KEY'
 ```python
 from typing import List, TYPE_CHECKING
 
-import api
-import utils
+from opendart import api, utils
 
 if TYPE_CHECKING:
-    from models.public_notice import Corporation
+    from opendart.models.public_notice import Corporation
 
 
-FILE_NAME = 'listed_corps'
+FILE_PATH = 'listed_corps'
 listed_corps: List['Corporation']
 '''종목코드가 발급된 상장사 목록'''
 
 try:
-    listed_corps: List['Corporation'] = utils.read_json_by_file_path(FILE_NAME)
+    listed_corps: List['Corporation'] = utils.read_json_by_file_path(FILE_PATH)
 except:
     listed_corps: List['Corporation'] = api.fetch_all_listed_corp()
-    utils.save_json_as_file(listed_corps, FILE_NAME)
+    utils.save_json_as_file(listed_corps, FILE_PATH)
 ```
