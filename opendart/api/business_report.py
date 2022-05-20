@@ -5,11 +5,11 @@ https://opendart.fss.or.kr/guide/main.do?apiGrpCd=DS002
 
 from typing import TYPE_CHECKING, List, Union
 
-from api.common import fetch, parse_json
-from config import API_URLS, DART_API_KEY
+from opendart.api.common import fetch, parse_json
+from opendart.config import API_URLS, DART_API_KEY
 
 if TYPE_CHECKING:
-    from models.business_report import StockQuantityStatus
+    from opendart.models.business_report import StockQuantityStatus
 
 
 def fetch_stock_total_quantity_status(

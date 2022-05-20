@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-from models.common import ApiParamas
+from opendart.models.common import ApiParamas
 
 
 class Corporation(TypedDict):
