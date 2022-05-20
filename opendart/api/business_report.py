@@ -64,6 +64,8 @@ def fetch_total_issued_stock_by_corp_code(
     is_preferred_stock: bool
             우선주 여부
                 default: False
+
+    # TODO 사업계획서(11011) 기준이라 bsns_year 값을 작년으로 잡았는데, 이게 맞나?
     '''
     from datetime import date
     reports = fetch_stock_total_quantity_status(
