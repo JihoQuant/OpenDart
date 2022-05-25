@@ -6,14 +6,16 @@ https://opendart.fss.or.kr/guide/main.do?apiGrpCd=DS001
 import json
 from typing import TYPE_CHECKING, List
 
+
 from opendart.api.common import fetch, parse_json
 from opendart.config import API_URLS, DART_API_KEY
 
 if TYPE_CHECKING:
+    from requests import Response
     from opendart.models.public_notice import Corporation, CorpCodeParams, CorpOverview, CorpOverviewParams
 
 
-def __parse_xml_to_json(response) -> dict:
+def __parse_xml_to_json(response: 'Response') -> dict:
     from io import BytesIO
     from zipfile import ZipFile
     from xmltodict import parse
