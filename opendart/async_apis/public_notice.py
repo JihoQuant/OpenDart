@@ -1,32 +1,22 @@
-'''공시정보 APIs
+'''(비동기) 공시정보 APIs
 
-https://opendart.fss.or.kr/guide/main.do?apiGrpCd=DS001
+See Also
+--------
+- https://opendart.fss.or.kr/guide/main.do?apiGrpCd=DS001
 '''
 
-import json
 from typing import TYPE_CHECKING, List
 
-
-from opendart.api.common import fetch, parse_json
+import aiohttp
+from opendart.async_apis.common import fetch
 from opendart.config import API_URLS, DART_API_KEY
 
 if TYPE_CHECKING:
-    from requests import Response
-    from opendart.models.public_notice import Corporation, CorpCodeParams, CorpOverview, CorpOverviewParams
+    from opendart.models.public_notice import CorpCodeParams, Corporation, CorpOverviewParams, CorpOverview
 
 
-def __parse_xml_to_json(response: 'Response') -> dict:
-    from io import BytesIO
-    from zipfile import ZipFile
-    from xmltodict import parse
-
-    _zip = ZipFile(BytesIO(response.content))
-    _xml = parse(_zip.read('CORPCODE.xml').decode('utf-8'))
-    return json.loads(json.dumps(_xml))
-
-
-def fetch_all_corp() -> List['Corporation']:
-    '''고유번호 조회
+async def fetch_all_corp() -> List['Corporation']:
+    '''(비동기) 고유번호 조회
 
     - API URL: `https://opendart.fss.or.kr/api/corpCode.xml`
     - API Params: `{ crtfc_key: API_KEY }`
@@ -45,13 +35,14 @@ def fetch_all_corp() -> List['Corporation']:
 
     url = API_URLS['corp_code']
     params: 'CorpCodeParams' = { 'crtfc_key': DART_API_KEY }
-    response = fetch(url, params)
 
-    return __parse_xml_to_json(response)['result']['list']
+    async with aiohttp.ClientSession() as session:
+        result = await fetch(session, url, params)
+        return result['result']['list']
 
 
-def fetch_all_listed_corp() -> List['Corporation']:
-    '''상장회사 목록 조회
+async def fetch_all_listed_corp() -> List['Corporation']:
+    '''(비동기) 상장회사 목록 조회
 
     공시대상회사 목록 중 상장사 목록을 조회합니다.
 
@@ -67,11 +58,11 @@ def fetch_all_listed_corp() -> List['Corporation']:
 
     See also :func:`api.public_notice.fetch_all_corp()`
     '''
-    return list(filter(lambda c: c['stock_code'], fetch_all_corp()))
+    return list(filter(lambda c: c['stock_code'], await fetch_all_corp()))
 
 
-def fetch_corp_overview_by_corp_code(corp_code: str) -> 'CorpOverview':
-    '''기업개황 조회
+async def fetch_corp_overview_by_corp_code(corp_code: str) -> 'CorpOverview':
+    '''(비동기) 기업개황 조회
 
     - API URL: `https://opendart.fss.or.kr/api/company.json`
     - API Params `{
@@ -86,4 +77,6 @@ def fetch_corp_overview_by_corp_code(corp_code: str) -> 'CorpOverview':
         'crtfc_key': DART_API_KEY,
         'corp_code': corp_code
     }
-    return parse_json(fetch(url, params))
+
+    async with aiohttp.ClientSession() as session:
+        return await fetch(session, url, params)

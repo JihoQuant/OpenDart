@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-from opendart.models.common import ApiParamas
+from opendart.models.common import ApiParams
 
 
 class Corporation(TypedDict):
@@ -50,10 +50,10 @@ class CorpOverview(TypedDict):
     '''결산월(MM)'''
 
 
-class CorpCodeParams(ApiParamas):
+class CorpCodeParams(ApiParams):
     '''고유번호 Params'''
 
-class CorpOverviewParams(ApiParamas):
+class CorpOverviewParams(ApiParams):
     '''기업개황 Params'''
     corp_code: str
     '''고유번호 - 공시대상회사의 고유번호(8자리)'''

@@ -3,7 +3,7 @@ from requests import Response, get
 
 
 if TYPE_CHECKING:
-    from opendart.models.common import ApiParamas
+    from opendart.models.common import ApiParams
 
 
 def __check_status_code(response: Response):
@@ -16,7 +16,7 @@ def __check_status(result: dict):
         raise Exception(result['status'], result['message'])
 
 
-def fetch(url: str, params: 'ApiParamas') -> Response:
+def fetch(url: str, params: 'ApiParams') -> Response:
     response = get(url, params)
     __check_status_code(response)
     return response
